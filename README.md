@@ -9,7 +9,7 @@ messing around with the classic student performance dataset.
 ## Data
 
 Using the UCI [Student Performance Data Set](https://archive.ics.uci.edu/dataset/320/student+performance)
-(`data/student_data.csv`) - 395 students with stuff like demographics, family background, study habits,
+(`data/student_data.csv`) - 395 students with variables like demographics, family background, study habits,
 and their 3 grades (G1, G2, G3).
 
 ## What's in here
