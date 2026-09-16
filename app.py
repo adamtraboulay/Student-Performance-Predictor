@@ -1,4 +1,6 @@
-"""Streamlit app for predicting a student's final grade (G3)."""
+# streamlit app, this is just the ui part
+# it takes all the inputs, runs it through the same preprocessing as
+# training, then loads the saved model and predicts
 
 import joblib
 import pandas as pd
@@ -17,6 +19,8 @@ st.write(
 )
 
 
+# cache_resource so it doesn't reload the model every single time
+# someone clicks the button, was slow without this
 @st.cache_resource
 def load_model():
     model = joblib.load(MODEL_PATH)
@@ -26,6 +30,8 @@ def load_model():
 
 model, feature_columns = load_model()
 
+# putting everything in a form so it only reruns once you hit submit
+# instead of every time you touch a slider
 with st.form("student_form"):
     col1, col2 = st.columns(2)
 
@@ -66,6 +72,8 @@ with st.form("student_form"):
     submitted = st.form_submit_button("Predict final grade")
 
 if submitted:
+    # need to build this into a dataframe with the exact same column
+    # names as the training data or the model will complain
     raw = pd.DataFrame([{
         "school": school, "sex": sex, "age": age, "address": address,
         "famsize": famsize, "Pstatus": Pstatus, "Medu": Medu, "Fedu": Fedu,
@@ -78,13 +86,17 @@ if submitted:
         "health": health, "absences": absences,
     }])
 
+    # same encoding steps as preprocess.py, has to match exactly
     for col in BINARY_COLS:
         raw[col] = raw[col].astype("category").cat.codes
 
     raw = pd.get_dummies(raw, columns=CATEGORICAL_COLS, drop_first=True)
+    # reindex fills in any dummy columns that didn't show up for this
+    # one input (like if Mjob_teacher wasn't picked) with 0s
     raw = raw.reindex(columns=feature_columns, fill_value=0)
 
     prediction = model.predict(raw)[0]
+    # clamp it so it can't predict something weird like -2 or 25
     prediction = max(0, min(20, prediction))
 
     st.subheader(f"Predicted final grade: {prediction:.1f} / 20")
