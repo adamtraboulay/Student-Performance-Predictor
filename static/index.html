@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Student Performance Predictor</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <h1>Student Performance Predictor</h1>
+    <p class="subtitle">Fill in the info below and it'll guess the final grade (G3, out of 20).</p>
+
+    <form id="student-form">
+      <fieldset>
+        <legend>Basics</legend>
+        <label>School
+          <select name="school"><option>GP</option><option>MS</option></select>
+        </label>
+        <label>Sex
+          <select name="sex"><option>F</option><option>M</option></select>
+        </label>
+        <label>Age
+          <input type="number" name="age" min="15" max="22" value="17" required />
+        </label>
+        <label>Home address
+          <select name="address"><option value="U">Urban</option><option value="R">Rural</option></select>
+        </label>
+        <label>Family size
+          <select name="famsize"><option value="GT3">More than 3</option><option value="LE3">3 or less</option></select>
+        </label>
+        <label>Parents living together?
+          <select name="Pstatus"><option value="T">Together</option><option value="A">Apart</option></select>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Family</legend>
+        <label>Mom's education (0=none, 4=higher ed)
+          <input type="number" name="Medu" min="0" max="4" value="2" required />
+        </label>
+        <label>Dad's education (0=none, 4=higher ed)
+          <input type="number" name="Fedu" min="0" max="4" value="2" required />
+        </label>
+        <label>Mom's job
+          <select name="Mjob"><option>teacher</option><option>health</option><option>services</option><option>at_home</option><option>other</option></select>
+        </label>
+        <label>Dad's job
+          <select name="Fjob"><option>teacher</option><option>health</option><option>services</option><option>at_home</option><option>other</option></select>
+        </label>
+        <label>Guardian
+          <select name="guardian"><option>mother</option><option>father</option><option>other</option></select>
+        </label>
+        <label>Family relationship quality (1-5)
+          <input type="number" name="famrel" min="1" max="5" value="4" required />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>School life</legend>
+        <label>Why they picked this school
+          <select name="reason"><option value="home">Home</option><option value="reputation">Reputation</option><option value="course">Course</option><option value="other">Other</option></select>
+        </label>
+        <label>Travel time to school (1=short, 4=long)
+          <input type="number" name="traveltime" min="1" max="4" value="1" required />
+        </label>
+        <label>Weekly study time (1=&lt;2hrs, 4=10+hrs)
+          <input type="number" name="studytime" min="1" max="4" value="2" required />
+        </label>
+        <label>Past class failures
+          <input type="number" name="failures" min="0" max="4" value="0" required />
+        </label>
+        <label>Extra school support?
+          <select name="schoolsup"><option value="no">No</option><option value="yes">Yes</option></select>
+        </label>
+        <label>Family support with school stuff?
+          <select name="famsup"><option value="no">No</option><option value="yes">Yes</option></select>
+        </label>
+        <label>Extra paid classes?
+          <select name="paid"><option value="no">No</option><option value="yes">Yes</option></select>
+        </label>
+        <label>Wants to go to uni?
+          <select name="higher"><option value="yes">Yes</option><option value="no">No</option></select>
+        </label>
+        <label>Number of absences
+          <input type="number" name="absences" min="0" max="93" value="4" required />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Lifestyle</legend>
+        <label>Does extra-curriculars?
+          <select name="activities"><option value="no">No</option><option value="yes">Yes</option></select>
+        </label>
+        <label>Went to nursery school?
+          <select name="nursery"><option value="yes">Yes</option><option value="no">No</option></select>
+        </label>
+        <label>Has internet at home?
+          <select name="internet"><option value="yes">Yes</option><option value="no">No</option></select>
+        </label>
+        <label>In a relationship?
+          <select name="romantic"><option value="no">No</option><option value="yes">Yes</option></select>
+        </label>
+        <label>Free time after school (1-5)
+          <input type="number" name="freetime" min="1" max="5" value="3" required />
+        </label>
+        <label>Goes out with friends (1-5)
+          <input type="number" name="goout" min="1" max="5" value="3" required />
+        </label>
+        <label>Alcohol on weekdays (1-5)
+          <input type="number" name="Dalc" min="1" max="5" value="1" required />
+        </label>
+        <label>Alcohol on weekends (1-5)
+          <input type="number" name="Walc" min="1" max="5" value="1" required />
+        </label>
+        <label>Health (1=bad, 5=great)
+          <input type="number" name="health" min="1" max="5" value="4" required />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Recent grades</legend>
+        <label class="checkbox-row">
+          <input type="checkbox" id="know-grades" />
+          I know my recent grades (G1/G2)
+        </label>
+        <p class="hint">Optional, but the prediction gets a lot more accurate if you provide these.</p>
+        <div id="grade-inputs" class="grade-inputs" hidden>
+          <label>First period grade, G1 (0-20)
+            <input type="number" name="G1" min="0" max="20" />
+          </label>
+          <label>Second period grade, G2 (0-20)
+            <input type="number" name="G2" min="0" max="20" />
+          </label>
+        </div>
+      </fieldset>
+
+      <button type="submit">Predict my grade</button>
+    </form>
+
+    <section id="result" class="result" hidden>
+      <p class="result-grade"></p>
+      <p class="result-category"></p>
+      <p class="result-model"></p>
+    </section>
+    <p id="error" class="error" hidden></p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
