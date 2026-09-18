@@ -33,9 +33,9 @@ def main():
         results[name] = {
             "model": model,
             "mae": mean_absolute_error(y_test, preds),
-            "r2": r2_score(y_test, preds),
+            "r^2": r2_score(y_test, preds),
         }
-        print(f"{name}: MAE={results[name]['mae']:.3f}  R2={results[name]['r2']:.3f}")
+        print(f"{name}: MAE={results[name]['mae']:.3f}  R2={results[name]['r^2']:.3f}")
 
     # lower MAE = better, so just grab whichever model has the smallest one
     best_name = min(results, key=lambda n: results[n]["mae"])
